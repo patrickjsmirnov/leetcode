@@ -1,6 +1,6 @@
 class ListNode {
   constructor(data, next) {
-    this.data = data;
+    this.data = data ?? 0;
     this.next = next ?? null;
   }
 }
@@ -9,6 +9,10 @@ class LinkedList {
   constructor() {
     this.head = null;
     this.tail = null;
+  }
+
+  getHead() {
+    return this.head;
   }
 
   append(data) {
@@ -184,6 +188,62 @@ class LinkedList {
     this.head = prev;
   }
 
+  static mergeTwoLists(head1, head2) {
+    let current1 = head1;
+    let current2 = head2;
+    let head;
+    let current;
+
+    if (!head1) return head2;
+    if (!head2) return head1;
+
+    if (head1.data <= head2.data) {
+      current = head1;
+      current1 = head1.next;
+      head = head1;
+    } else {
+      current = head2;
+      current2 = head2.next;
+      head = head2;
+    }
+
+    while (current) {
+      if (!current1) {
+        current.next = current2;
+        return head;
+      }
+
+      if (!current2) {
+        current.next = current1;
+        return head;
+      }
+
+      if (current1.data < current2.data) {
+        current.next = current1;
+        current1 = current1.next;
+      } else {
+        current.next = current2;
+        current2 = current2.next;
+      }
+
+      current = current.next;
+    }
+
+    return head;
+  }
+
+  static print(head) {
+    const dataArray = [];
+    let current = head;
+
+    while (current !== null) {
+      dataArray.push(current.data);
+      current = current.next;
+    }
+
+    console.log(dataArray);
+  }
+
   print() {
     const dataArray = [];
     let current = this.head;
@@ -197,7 +257,8 @@ class LinkedList {
   }
 }
 
-const linkedList = new LinkedList();
+const linkedList1 = new LinkedList();
+const linkedList2 = new LinkedList();
 
 // linkedList.append(1);
 // linkedList.append(2);
@@ -211,8 +272,13 @@ const linkedList = new LinkedList();
 // linkedList.arrayToLinkedList([1, 2, 2]);
 // linkedList.arrayToLinkedList([1, 1]);
 // linkedList.arrayToLinkedList([1, 2, 2, 1]); // true
-linkedList.arrayToLinkedList([1, 2]); // false
+linkedList1.arrayToLinkedList([1, 4, 5]); // false
+linkedList2.arrayToLinkedList([2, 3]); // false
 // linkedList.arrayToLinkedList([1, 1, 2, 3, 3]);
-linkedList.print();
-linkedList.isPalindrome();
+
+const head1 = linkedList1.getHead();
+const head2 = linkedList2.getHead();
+
+LinkedList.print(LinkedList.mergeTwoLists(head1, head2));
+
 // linkedList.print();
