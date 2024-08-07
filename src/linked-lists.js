@@ -68,7 +68,7 @@ class LinkedList {
 
   arrayToLinkedList(arr) {
     this.head = new ListNode(arr[0]);
-    this.tail = new LinkedList(arr[arr.length - 1]);
+    this.tail = new ListNode(arr[arr.length - 1]);
 
     let current = this.head;
 
@@ -188,6 +188,25 @@ class LinkedList {
     this.head = prev;
   }
 
+  removeElementsWithValue(value) {
+    let dummy = new ListNode(0);
+    dummy.next = this.head;
+
+    let current = this.head;
+    let prev = dummy;
+
+    while (current !== null) {
+      if (current.data === value) {
+        prev.next = current.next;
+      } else {
+        prev = current;
+      }
+      current = current.next;
+    }
+
+    return dummy.next;
+  }
+
   static mergeTwoLists(head1, head2) {
     let current1 = head1;
     let current2 = head2;
@@ -272,13 +291,15 @@ const linkedList2 = new LinkedList();
 // linkedList.arrayToLinkedList([1, 2, 2]);
 // linkedList.arrayToLinkedList([1, 1]);
 // linkedList.arrayToLinkedList([1, 2, 2, 1]); // true
-linkedList1.arrayToLinkedList([1, 4, 5]); // false
-linkedList2.arrayToLinkedList([2, 3]); // false
+linkedList1.arrayToLinkedList([1, 2, 6, 3, 4, 5, 6]); // false
+linkedList1.print();
+linkedList1.removeElementsWithValue(6);
+// linkedList2.arrayToLinkedList([2, 3]); // false
 // linkedList.arrayToLinkedList([1, 1, 2, 3, 3]);
 
-const head1 = linkedList1.getHead();
-const head2 = linkedList2.getHead();
+// const head1 = linkedList1.getHead();
+// const head2 = linkedList2.getHead();
 
-LinkedList.print(LinkedList.mergeTwoLists(head1, head2));
+// LinkedList.print(LinkedList.mergeTwoLists(head1, head2));
 
-// linkedList.print();
+linkedList1.print();
